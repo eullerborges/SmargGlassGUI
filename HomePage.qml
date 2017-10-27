@@ -4,6 +4,10 @@ HomePageForm {
 //    button1.onClicked: {
 //        console.log("Button Pressed. Entered text: " + textField1.text);
 //    }
+    led1Button.onChosen: {
+        console.log("EITA");
+        tabBar.currentIndex = 1;
+    }
 //    led1Button.onClicked:{
 //        console.log("Foi demais no led1");
 //    }
