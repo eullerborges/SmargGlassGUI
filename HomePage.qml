@@ -7,6 +7,12 @@ HomePageForm {
     led1Button.onChosen: {
         console.log("EITA");
         tabBar.currentIndex = 1;
+        this.chosenLed = led1Button
+    }
+    led2Button.onChosen: {
+        console.log("EITA");
+        tabBar.currentIndex = 1;
+        this.chosenLed = led2Button
     }
 //    led1Button.onClicked:{
 //        console.log("Foi demais no led1");

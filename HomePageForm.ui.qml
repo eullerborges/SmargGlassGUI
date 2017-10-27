@@ -5,22 +5,23 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Controls.Styles 1.4
 
 Item {
-    id: item1
+    id: homePage
     width: 150
     height: 100
 
-    //property alias textField1: textField1
-    //property alias button1: button1
     property alias led1Button: led1
     property alias led2Button: led2
-    ColumnLayout{
+    property LedButton chosenLed: led1
+    ColumnLayout {
         id: columnLayout
         anchors.fill: parent
-        Pane{
+        Pane {
             id: pane
-            background: Rectangle {color: "#b3e7f7"}
+            background: Rectangle {
+                color: "#b3e7f7"
+            }
             anchors.fill: parent
-            Image{
+            Image {
                 id: glassImage
                 anchors.fill: parent
                 fillMode: Image.PreserveAspectFit
@@ -28,12 +29,13 @@ Item {
             }
             LedButton {
                 id: led1
+                name: "led1"
                 anchors.leftMargin: 40
                 anchors.topMargin: 30
-
             }
             LedButton {
                 id: led2
+                name: "led2"
                 anchors.leftMargin: 10
                 anchors.topMargin: 50
             }

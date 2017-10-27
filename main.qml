@@ -9,12 +9,14 @@ ApplicationWindow {
     title: qsTr("NiceGlass")
     property alias swipeView: swipeView
     property alias tabBar: tabBar
+    property alias homePage: homePage
 
     SwipeView {
         id: swipeView
         anchors.fill: parent
         currentIndex: tabBar.currentIndex
         HomePage {
+            id: homePage
         }
         ConfigPage {
             id: configPage

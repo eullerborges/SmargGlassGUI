@@ -4,7 +4,7 @@ import QtQuick.Controls 2.0
 Item {
     Text {
             id: helloText
-            text: "Hello world!"
+            text: homePage.chosenLed.name
             y: 30
             anchors.horizontalCenter: parent.horizontalCenter
             font.pointSize: 24; font.bold: true
