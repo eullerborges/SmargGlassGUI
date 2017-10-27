@@ -13,6 +13,45 @@ Item {
     //property alias button1: button1
     property alias led1Button: led1
     property alias led2Button: led2
+    ColumnLayout{
+        id: columnLayout
+        anchors.fill: parent
+        Pane{
+            id: pane
+            background: Rectangle {color: "#b3e7f7"}
+            anchors.fill: parent
+            Image{
+                id: glassImage
+                anchors.fill: parent
+                fillMode: Image.PreserveAspectFit
+                source: "resources/round-compliment.png"
 
+                Button {
+                    id: button
+                    x: 26
+                    y: 0
+                    width: 16
+                    height: 12
+                    text: qsTr("Button")
+                    background: Rectangle{
+                        color: button.pressed? "#f6f6f6" : "#e4e2e2"
+                    }
+                }
+            }
+            LedButton {
+                id: led1
+                anchors.leftMargin: 40
+                anchors.topMargin: 30
+                anchors.top: parent.top
+                anchors.left: parent.left
+            }
+            LedButton {
+                id: led2
+                anchors.leftMargin: 10
+                anchors.topMargin: 50
+                anchors.top: parent.top
+                anchors.left: parent.left
+            }
+        }
     }
 }

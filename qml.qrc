@@ -10,5 +10,7 @@
         <file>ColorCellForm.ui.qml</file>
         <file>ConfigPage.qml</file>
         <file>ConfigPageForm.ui.qml</file>
+        <file>LedButton.qml</file>
+        <file>LedButtonForm.ui.qml</file>
     </qresource>
 </RCC>
