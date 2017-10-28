@@ -1,7 +1,10 @@
 import QtQuick 2.4
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.2
 
 Item {
+    property alias colorSliderText: colorSliderText
+    property alias colorSlider: colorSlider
+
     property alias helloText: helloText
     property alias redcell: redcell
     property alias greencell: greencell
@@ -22,11 +25,28 @@ Item {
 
            rows: 2; columns: 3; spacing: 3
 
-           ColorCell { id: redcell; cellColor: "red"; associatedLed: homePage.led1Button}
-           ColorCell { id: greencell; cellColor: "green"; associatedLed: homePage.led1Button}
-           ColorCell { id: bluecell; cellColor: "blue"; associatedLed: homePage.led1Button}
-           ColorCell { id: yellowcell; cellColor: "yellow"; associatedLed: homePage.led2Button}
-           ColorCell { id: steelbluecell; cellColor: "steelblue"; associatedLed: homePage.led2Button}
-           ColorCell { id: blackcell; cellColor: "black"; associatedLed: homePage.led2Button}
+           ColorCell { id: redcell; cellColor: "red"}
+           ColorCell { id: greencell; cellColor: "green"}
+           ColorCell { id: bluecell; cellColor: "blue"}
+           ColorCell { id: yellowcell; cellColor: "yellow"}
+           ColorCell { id: steelbluecell; cellColor: "steelblue"}
+           ColorCell { id: blackcell; cellColor: "black"}
+    }
+
+    Slider {
+        id: colorSlider
+        x: 20
+        y: 45
+        anchors.horizontalCenter: parent.horizontalCenter
+        snapMode: "SnapAlways"
+        stepSize: 1/3
+        value: 0
+        Text{
+            id: colorSliderText
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.bottom
+            text: parent.value
+            font.pointSize: 18
+        }
     }
 }

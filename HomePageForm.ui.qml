@@ -31,7 +31,7 @@ Item {
                 id: led1
                 name: "led1"
                 anchors.leftMargin: 40
-                anchors.topMargin: 30
+                anchors.topMargin: 41
             }
             LedButton {
                 id: led2
