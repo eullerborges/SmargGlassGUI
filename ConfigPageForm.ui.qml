@@ -2,6 +2,13 @@ import QtQuick 2.4
 import QtQuick.Controls 2.0
 
 Item {
+    property alias helloText: helloText
+    property alias redcell: redcell
+    property alias greencell: greencell
+    property alias bluecell: bluecell
+    property alias yellowcell: yellowcell
+    property alias steelbluecell: steelbluecell
+    property alias blackcell: blackcell
     Text {
             id: helloText
             text: homePage.chosenLed.name
@@ -15,11 +22,11 @@ Item {
 
            rows: 2; columns: 3; spacing: 3
 
-           ColorCell { cellColor: "red"; onClicked: helloText.color = cellColor }
-           ColorCell { cellColor: "green"; onClicked: helloText.color = cellColor }
-           ColorCell { cellColor: "blue"; onClicked: helloText.color = cellColor }
-           ColorCell { cellColor: "yellow"; onClicked: helloText.color = cellColor }
-           ColorCell { cellColor: "steelblue"; onClicked: helloText.color = cellColor }
-           ColorCell { cellColor: "black"; onClicked: helloText.color = cellColor }
+           ColorCell { id: redcell; cellColor: "red"; associatedLed: homePage.led1Button}
+           ColorCell { id: greencell; cellColor: "green"; associatedLed: homePage.led1Button}
+           ColorCell { id: bluecell; cellColor: "blue"; associatedLed: homePage.led1Button}
+           ColorCell { id: yellowcell; cellColor: "yellow"; associatedLed: homePage.led2Button}
+           ColorCell { id: steelbluecell; cellColor: "steelblue"; associatedLed: homePage.led2Button}
+           ColorCell { id: blackcell; cellColor: "black"; associatedLed: homePage.led2Button}
     }
 }

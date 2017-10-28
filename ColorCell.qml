@@ -4,6 +4,6 @@ ColorCellForm {
     id: container
     MouseArea {
         anchors.fill: parent
-        onClicked: container.clicked(container.cellColor)
+        onClicked: container.clicked(container.cellColor, container.associatedLed)
     }
 }

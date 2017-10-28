@@ -3,9 +3,11 @@ import QtQuick 2.4
 Item {
     id: container
     property alias cellColor: rectangle.color
-    signal clicked(color cellColor)
+    property LedButton associatedLed: homePage.led1Button
+    signal clicked(color cellColour, LedButton ledToChange)
 
-    width: 40; height: 25
+    width: 40
+    height: 25
 
     Rectangle {
         id: rectangle
