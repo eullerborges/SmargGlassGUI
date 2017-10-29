@@ -4,13 +4,14 @@
         <file>HomePage.qml</file>
         <file>HomePageForm.ui.qml</file>
         <file>qtquickcontrols2.conf</file>
-        <file>resources/round-compliment.svg</file>
-        <file>resources/round-compliment.png</file>
         <file>ColorCell.qml</file>
         <file>ColorCellForm.ui.qml</file>
         <file>ConfigPage.qml</file>
         <file>ConfigPageForm.ui.qml</file>
         <file>LedButton.qml</file>
         <file>LedButtonForm.ui.qml</file>
+        <file>ColorSlider.qml</file>
+        <file>resources/glass_image.png</file>
+        <file>resources/glass_image.svg</file>
     </qresource>
 </RCC>

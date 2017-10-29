@@ -13,7 +13,6 @@ Item {
     property color pressColor: "slategray"
     property int fontSize: 10
     property int borderWidth: 1
-    property int borderRadius: 8
     scale: state === "Pressed" ? 0.96 : 1.0
     onEnabledChanged: state = ""
     signal clicked
@@ -23,7 +22,7 @@ Item {
     Rectangle {
         id: rectangleButton
         anchors.fill: parent
-        radius: borderRadius
+        radius: width
         color: button.enabled ? button.color : "grey"
         border.width: borderWidth
         border.color: "black"

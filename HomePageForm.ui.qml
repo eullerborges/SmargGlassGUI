@@ -6,39 +6,45 @@ import QtQuick.Controls.Styles 1.4
 
 Item {
     id: homePage
-    width: 150
-    height: 100
 
+    property alias glassImage: glassImage
     property alias led1Button: led1
     property alias led2Button: led2
     property LedButton chosenLed: led1
-    ColumnLayout {
-        id: columnLayout
+
+    Pane {
+        id: pane
+        background: Rectangle {
+            color: "#b3e7f7"
+        }
         anchors.fill: parent
-        Pane {
-            id: pane
-            background: Rectangle {
-                color: "#b3e7f7"
-            }
+        Image {
+            id: glassImage
             anchors.fill: parent
-            Image {
-                id: glassImage
-                anchors.fill: parent
-                fillMode: Image.PreserveAspectFit
-                source: "resources/round-compliment.png"
-            }
-            LedButton {
-                id: led1
-                name: "led1"
-                anchors.leftMargin: 40
-                anchors.topMargin: 41
-            }
-            LedButton {
-                id: led2
-                name: "led2"
-                anchors.leftMargin: 10
-                anchors.topMargin: 50
-            }
+            fillMode: Image.PreserveAspectFit
+            source: "resources/glass_image.png"
+            LedButton {id: led1; name: "LED 1"; leftMarginModifier: 0.1275; topMarginModifier: 0.058412}
+            LedButton {id: led2; name: "LED 2"; leftMarginModifier: 0.0625; topMarginModifier: 0.210412}
+            LedButton {id: led3; name: "LED 3"; leftMarginModifier: 0.0725; topMarginModifier: 0.500412}
+            LedButton {id: led4; name: "LED 4"; leftMarginModifier: 0.1075; topMarginModifier: 0.820412}
+            LedButton {id: led5; name: "LED 5"; leftMarginModifier: 0.2025; topMarginModifier: 0.955412}
+            LedButton {id: led6; name: "LED 6"; leftMarginModifier: 0.3225; topMarginModifier: 0.935412}
+            LedButton {id: led7; name: "LED 7"; leftMarginModifier: 0.4005; topMarginModifier: 0.735412}
+            LedButton {id: led8; name: "LED 8"; leftMarginModifier: 0.2375; topMarginModifier: 0.058412}
+            LedButton {id: led9; name: "LED 9"; leftMarginModifier: 0.3375; topMarginModifier: 0.103412}
+            LedButton {id: led10; name: "LED 10"; leftMarginModifier: 0.4405; topMarginModifier: 0.228412}
+
+
+            LedButton {id: led11; name: "LED 11"; leftMarginModifier: 1 - led1.leftMarginModifier; topMarginModifier: led1.topMarginModifier}
+            LedButton {id: led12; name: "LED 12"; leftMarginModifier: 1 - led2.leftMarginModifier; topMarginModifier: led2.topMarginModifier}
+            LedButton {id: led13; name: "LED 13"; leftMarginModifier: 1 - led3.leftMarginModifier; topMarginModifier: led3.topMarginModifier}
+            LedButton {id: led14; name: "LED 14"; leftMarginModifier: 1 - led4.leftMarginModifier; topMarginModifier: led4.topMarginModifier}
+            LedButton {id: led15; name: "LED 15"; leftMarginModifier: 1 - led5.leftMarginModifier; topMarginModifier: led5.topMarginModifier}
+            LedButton {id: led16; name: "LED 16"; leftMarginModifier: 1 - led6.leftMarginModifier; topMarginModifier: led6.topMarginModifier}
+            LedButton {id: led17; name: "LED 17"; leftMarginModifier: 1 - led7.leftMarginModifier; topMarginModifier: led7.topMarginModifier}
+            LedButton {id: led18; name: "LED 18"; leftMarginModifier: 1 - led8.leftMarginModifier; topMarginModifier: led8.topMarginModifier}
+            LedButton {id: led19; name: "LED 19"; leftMarginModifier: 1 - led9.leftMarginModifier; topMarginModifier: led9.topMarginModifier}
+            LedButton {id: led20; name: "LED 20"; leftMarginModifier: 1 - led10.leftMarginModifier; topMarginModifier: led10.topMarginModifier}
         }
     }
 }

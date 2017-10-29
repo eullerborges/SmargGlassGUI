@@ -1,22 +1,18 @@
-import QtQuick 2.4
+import QtQuick 2.9
 import QtQuick.Controls 2.2
 
 ConfigPageForm {
     id: configPage
-    //redcell.onCompleted: {redcell.onClicked.connect(updateColor)}
-
     Component.onCompleted: {
         var ledArray = [redcell, greencell, bluecell, yellowcell, steelbluecell, blackcell];
         ledArray.forEach(function(elem){
             elem.onClicked.connect(updateColor);
         })
-        //colorSliderText.onLineLaidOut.connect(updateColorSliderText)
-        //colorSliderText.moved.connect(updateColorSliderText)
-        //redcell.onClicked.connect(updateColor)
+        redColorSlider.onIntensityChanged.connect(updateColorSliderText)
+        greenColorSlider.onIntensityChanged.connect(updateColorSliderText)
+        blueColorSlider.onIntensityChanged.connect(updateColorSliderText)
     }
-    colorSliderText.onLineLaidOut: {updateColorSliderText()}
-    //colorSlider.onMoved: {updateColorSliderText()}
-    //redcell.onClicked: {updateColor(cellColour, ledToChange)}
+    //colorSlider.onValueChanged: {console.log("TRETAMIL")}
 
     function updateColor(color) {
         homePage.chosenLed.color = color
@@ -25,12 +21,11 @@ ConfigPageForm {
         tabBar.currentIndex = 0;
     }
 
-    function updateColorSliderText(){
-//        console.log("MEXEUEUEU")
-//        if (colorSlider.value == 0) colorSliderText.text = "zero";
-//        if (colorSlider.value == 1/3) colorSliderText.text = "vintecinco";
-//        if (colorSlider.value == 2/3) colorSliderText.text = "cinquenta";
-//        else colorSliderText.text = "cem";
+    function updateColorSliderText(slider_changed){
+        if (slider_changed.value == 0) slider_changed.textItem.text = "0 %";
+        else if (slider_changed.value == 1/3) slider_changed.textItem.text = "25 %";
+        else if (slider_changed.value == 2/3) slider_changed.textItem.text = "50 %";
+        else if (slider_changed.value == 1) slider_changed.textItem.text = "100 %";
         //colorSliderText.text = "eitcha"
     }
 }
