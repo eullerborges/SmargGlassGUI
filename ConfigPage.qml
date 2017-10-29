@@ -4,19 +4,17 @@ import QtQuick.Controls 2.2
 ConfigPageForm {
     id: configPage
     Component.onCompleted: {
-        var ledArray = [redcell, greencell, bluecell, yellowcell, steelbluecell, blackcell];
-        ledArray.forEach(function(elem){
-            elem.onClicked.connect(updateColor);
-        })
         redColorSlider.onIntensityChanged.connect(updateColorSliderText)
         greenColorSlider.onIntensityChanged.connect(updateColorSliderText)
         blueColorSlider.onIntensityChanged.connect(updateColorSliderText)
+        console.log("Final: " + redColorSlider.textSize)
     }
-    //colorSlider.onValueChanged: {console.log("TRETAMIL")}
+    redColorSlider.onTextSizeChanged: {
+        console.log("Changed: " + redColorSlider.textSize)
+    }
 
     function updateColor(color) {
         homePage.chosenLed.color = color
-        //ledbutton.color = color
         helloText.color = color
         tabBar.currentIndex = 0;
     }

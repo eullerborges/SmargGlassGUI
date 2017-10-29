@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.3
 ApplicationWindow {
     visible: true
     width: 640
-    height: 480
+    height: 680
     title: qsTr("NiceGlass")
     property alias swipeView: swipeView
     property alias tabBar: tabBar

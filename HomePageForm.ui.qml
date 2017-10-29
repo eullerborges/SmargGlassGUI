@@ -8,9 +8,13 @@ Item {
     id: homePage
 
     property alias glassImage: glassImage
+    property list<LedButton> ledButtons
     property alias led1Button: led1
     property alias led2Button: led2
     property LedButton chosenLed: led1
+
+    ledButtons: [led1, led2, led3, led4, led5, led6, led7, led8, led9, led10,
+                 led11, led12, led13, led14, led15, led16, led17, led18, led19, led20]
 
     Pane {
         id: pane

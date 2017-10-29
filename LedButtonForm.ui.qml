@@ -16,7 +16,7 @@ Item {
     scale: state === "Pressed" ? 0.96 : 1.0
     onEnabledChanged: state = ""
     signal clicked
-    signal chosen
+    signal chosen(Item thisled)
 
     //Rectangle to draw the button
     Rectangle {
