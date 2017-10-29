@@ -9,10 +9,6 @@ Item {
 
     property alias ledName: ledName
     // Texto com nome dos leds
-    ColumnLayout {
-        anchors.top: parent.top
-        anchors.topMargin: 10
-        anchors.horizontalCenter: parent.horizontalCenter
     Pane{
         id: ledNamePane
         anchors.top: parent.top
@@ -88,7 +84,7 @@ Item {
        anchors.horizontalCenter: parent.horizontalCenter
        Dial{
            id: timerDial
-           height: configPage.height/3
+           height: configPage.height - slidersPane.height - ledNamePane.height - tabBar.height
            from: 0
            to: 1
            stepSize: 0.1
@@ -100,6 +96,4 @@ Item {
            }
        }
     }
-}
-
 }

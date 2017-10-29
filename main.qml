@@ -11,6 +11,9 @@ ApplicationWindow {
     property alias tabBar: tabBar
     property alias homePage: homePage
 
+    minimumHeight: 335
+    minimumWidth: 300
+
     SwipeView {
         id: swipeView
         anchors.fill: parent
