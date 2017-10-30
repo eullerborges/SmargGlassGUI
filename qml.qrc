@@ -13,5 +13,6 @@
         <file>ColorSlider.qml</file>
         <file>resources/glass_image.png</file>
         <file>resources/glass_image.svg</file>
+        <file>TimerDial.qml</file>
     </qresource>
 </RCC>

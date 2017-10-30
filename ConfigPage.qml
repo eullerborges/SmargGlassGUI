@@ -9,8 +9,19 @@ ConfigPageForm {
         blueColorSlider.onIntensityChanged.connect(updateColorSliderText)
         console.log("Final: " + redColorSlider.textSize)
     }
-    redColorSlider.onTextSizeChanged: {
-        console.log("Changed: " + redColorSlider.textSize)
+    // Atualizando texto do valor do Dial
+    timerDial.onValueChanged: {
+        timerDial.text = timerDialToText(timerDial.value)
+    }
+
+    // Conversão dos ticks do dial para tempo em segundos
+    function timerDialToSeconds(value){
+        return value.toFixed(2)
+    }
+    // Conversão de tempo para texto para mostrar no Dial
+    function timerDialToText(value){
+        if (value == 0) return "PERM"
+        else return "%1".arg(timerDialToSeconds(timerDial.value)) + " s"
     }
 
     function updateColor(color) {
@@ -19,6 +30,7 @@ ConfigPageForm {
         tabBar.currentIndex = 0;
     }
 
+    // Atualização do texto da porcentagem no slider
     function updateColorSliderText(slider_changed){
         if (slider_changed.value == 0) slider_changed.textItem.text = "0 %";
         else if (slider_changed.value == 1/3) slider_changed.textItem.text = "25 %";

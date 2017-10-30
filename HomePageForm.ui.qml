@@ -26,6 +26,10 @@ Item {
             id: glassImage
             anchors.fill: parent
             fillMode: Image.PreserveAspectFit
+            antialiasing: true
+            smooth: true
+            sourceSize.width: 2048
+            sourceSize.height: 622
             source: "resources/glass_image.png"
             LedButton {id: led1; name: "LED 1"; leftMarginModifier: 0.1275; topMarginModifier: 0.058412}
             LedButton {id: led2; name: "LED 2"; leftMarginModifier: 0.0625; topMarginModifier: 0.210412}
