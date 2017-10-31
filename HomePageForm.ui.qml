@@ -31,16 +31,16 @@ Item {
             sourceSize.width: 2048
             sourceSize.height: 622
             source: "resources/glass_image.png"
-            LedButton {id: led1; name: "LED 1"; leftMarginModifier: 0.1275; topMarginModifier: 0.058412}
-            LedButton {id: led2; name: "LED 2"; leftMarginModifier: 0.0625; topMarginModifier: 0.210412}
-            LedButton {id: led3; name: "LED 3"; leftMarginModifier: 0.0725; topMarginModifier: 0.500412}
-            LedButton {id: led4; name: "LED 4"; leftMarginModifier: 0.1075; topMarginModifier: 0.820412}
-            LedButton {id: led5; name: "LED 5"; leftMarginModifier: 0.2025; topMarginModifier: 0.955412}
-            LedButton {id: led6; name: "LED 6"; leftMarginModifier: 0.3225; topMarginModifier: 0.935412}
-            LedButton {id: led7; name: "LED 7"; leftMarginModifier: 0.4005; topMarginModifier: 0.735412}
-            LedButton {id: led8; name: "LED 8"; leftMarginModifier: 0.2375; topMarginModifier: 0.058412}
-            LedButton {id: led9; name: "LED 9"; leftMarginModifier: 0.3375; topMarginModifier: 0.103412}
-            LedButton {id: led10; name: "LED 10"; leftMarginModifier: 0.4405; topMarginModifier: 0.228412}
+            LedButton {id: led1; name: "LED 1"; leftMarginModifier: 0.1275; topMarginModifier: 0.052412}
+            LedButton {id: led2; name: "LED 2"; leftMarginModifier: 0.0625; topMarginModifier: 0.204412}
+            LedButton {id: led3; name: "LED 3"; leftMarginModifier: 0.0725; topMarginModifier: 0.494412}
+            LedButton {id: led4; name: "LED 4"; leftMarginModifier: 0.1075; topMarginModifier: 0.804412}
+            LedButton {id: led5; name: "LED 5"; leftMarginModifier: 0.2025; topMarginModifier: 0.940412}
+            LedButton {id: led6; name: "LED 6"; leftMarginModifier: 0.3225; topMarginModifier: 0.920412}
+            LedButton {id: led7; name: "LED 7"; leftMarginModifier: 0.4005; topMarginModifier: 0.720412}
+            LedButton {id: led8; name: "LED 8"; leftMarginModifier: 0.2375; topMarginModifier: 0.052412}
+            LedButton {id: led9; name: "LED 9"; leftMarginModifier: 0.3375; topMarginModifier: 0.096012}
+            LedButton {id: led10; name: "LED 10"; leftMarginModifier: 0.4405; topMarginModifier: 0.223412}
 
 
             LedButton {id: led11; name: "LED 11"; leftMarginModifier: 1 - led1.leftMarginModifier; topMarginModifier: led1.topMarginModifier}
