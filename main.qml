@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import Backend 1.0
 
 ApplicationWindow {
     id: main_window
@@ -21,10 +22,17 @@ ApplicationWindow {
         currentIndex: tabBar.currentIndex
         HomePage {
             id: homePage
+            objectName: "homePage"
         }
-        ConfigPage {
+        LedConfigPage {
             id: configPage
         }
+    }
+
+    ConfigurationWindow {
+        id: configurationWindow
+        width: 0.5 * parent.width
+        height: 0.6 * parent.height
     }
 
     footer: TabBar {
@@ -41,12 +49,13 @@ ApplicationWindow {
         TabButton {
             id: tabButtonConfig
             height: parent.height
-            text: qsTr("Configurações")
+            text: qsTr("LED")
             font.pointSize: parent.height? parent.height/1.5 : 20
             onPressed: {swipeView.setCurrentIndex(1)}
         }
-        onCurrentIndexChanged: {
-            console.log("CHANGEDDDDD " + currentIndex )
-        }
+    }
+    Backend{
+        id: backend
+        onSerialOpened: console.debug("Opened");
     }
 }

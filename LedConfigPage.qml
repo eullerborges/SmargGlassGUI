@@ -1,13 +1,12 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 
-ConfigPageForm {
+LedConfigPageForm {
     id: configPage
     Component.onCompleted: {
         redColorSlider.onIntensityChanged.connect(updateColorSliderText)
         greenColorSlider.onIntensityChanged.connect(updateColorSliderText)
         blueColorSlider.onIntensityChanged.connect(updateColorSliderText)
-        console.log("Final: " + redColorSlider.textSize)
     }
     // Atualizando texto do valor do Dial
     timerDial.onValueChanged: {
@@ -20,7 +19,7 @@ ConfigPageForm {
     }
     // Conversão de tempo para texto para mostrar no Dial
     function timerDialToText(value){
-        if (value == 0) return "PERM"
+        if (value === 0) return "PERM"
         else return "%1".arg(timerDialToSeconds(timerDial.value)) + " s"
     }
 

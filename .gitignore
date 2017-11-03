@@ -72,4 +72,8 @@ Thumbs.db
 *.exe
 *.qmlc
 build/
-
+ContentSlider.qml
+.clang_complete
+GPATH
+GTAGS 
+GRTAGS 

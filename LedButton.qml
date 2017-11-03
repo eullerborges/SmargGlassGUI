@@ -48,7 +48,7 @@ LedButtonForm {
         }
         //onEntered: { var col = []; col[0] = button.color; col[0].hslSaturation *= 0.8; hoverColor = col[0]; button.state='Hovering'}
         onExited: { button.state=''}
-        onClicked: { console.log("TRETA"); button.chosen(button); button.clicked()}
+        onClicked: { button.chosen(button); button.clicked()}
         onPressed: { button.state="Pressed" }
         onReleased: {
             if (containsMouse)

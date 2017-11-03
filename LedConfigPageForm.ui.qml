@@ -104,7 +104,7 @@ Item {
                     anchors.centerIn: parent
                 }
             }
-            // Paner com o botão de enviar
+            // Pane com o botão de enviar
             Pane{
                 id: enviarPane
                 width: parent.width * 1/3
