@@ -9,11 +9,13 @@
 #include <QQmlComponent>
 #include <QQmlProperty>
 #include <QQmlContext>
+#include "protobuf/Protocol_Commands.pb.h"
 
 QT_USE_NAMESPACE
 
 int main(int argc, char *argv[])
 {
+    //GOOGLE_PROTOBUF_VERIFY_VERSION;
     qmlRegisterType<Backend>("Backend", 1, 0, "Backend");
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
@@ -35,5 +37,6 @@ int main(int argc, char *argv[])
 //    qDebug() << homePage;
 //    qDebug() << homePage->property("infoPaneText");
 
-    return app.exec();
+   app.exec();
+   //google::protobuf::ShutdownProtobufLibrary();
 }

@@ -9,7 +9,7 @@ Item {
 
     property alias ledName: ledName
     property alias timerDial: timerDial
-    property alias internalButton: internalButton
+    property alias sendButton: sendButton
     // Texto com nome dos leds
     Pane{
         id: ledNamePane
@@ -111,7 +111,8 @@ Item {
                 height: parent.height
                 background: Rectangle{color:rowPaneBg.color}
                 Button{
-                    id: internalButton
+                    id: sendButton
+                    enabled: homePage.connectionStatus == "Connected"? true : false
                     anchors.centerIn: parent
                     height: timerRow.height/2
                     width: timerRow.width/4
@@ -121,10 +122,10 @@ Item {
                     //anchors.topMargin: 12
                     contentItem: Text {
                         id: innerText
-                        text: internalButton.text
-                        font: internalButton.font
+                        text: sendButton.text
+                        font: sendButton.font
                         opacity: enabled ? 1.0 : 0.3
-                        color: internalButton.down ? "#17a81a" : "#21be2b"
+                        color: sendButton.down ? "#17a81a" : "#21be2b"
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
@@ -133,7 +134,7 @@ Item {
                         implicitWidth: 100
                         implicitHeight: 40
                         opacity: enabled ? 1 : 0.3
-                        border.color: internalButton.down ? "#17a81a" : "#21be2b"
+                        border.color: sendButton.down ? "#17a81a" : "#21be2b"
                         border.width: 1
                         radius: 2
                     }

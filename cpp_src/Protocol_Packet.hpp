@@ -9,7 +9,7 @@
 #include <string>
 #include <stdint.h>
 
-const uint8_t START_FRAME[] = {0x55, 0x69, 0x55, 0x69};
+const uint8_t START_FRAME[] = {0x55, 0x66};
 
 // Defines dos message types
 #define MT_MEAS_DATA  0x01
@@ -19,12 +19,11 @@ const uint8_t START_FRAME[] = {0x55, 0x69, 0x55, 0x69};
  */
 class Protocol_Packet {
 public:
-  uint32_t start_frame;
-  uint32_t uid;
+  uint16_t start_frame;
   uint8_t message_type;
   uint8_t seq_number;
   uint16_t data_size;
-  uint32_t crc;
+  uint16_t crc;
   std::string data;
   /**
    * Função de reset do pacote. Zera todos os campos.

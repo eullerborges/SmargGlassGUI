@@ -12,7 +12,7 @@
 
 using namespace std;
 
-enum FSM_State {GET_START_FRAME, GET_UID, GET_MESSAGE_TYPE,
+enum FSM_State {GET_START_FRAME, GET_MESSAGE_TYPE,
   GET_SEQ_NUMBER, GET_DATA_SIZE, GET_CRC, GET_DATA};
 
 
@@ -32,7 +32,7 @@ public:
 
 private:
   FSM_State _state;
-  Protocol_Packet *_packet;
+  Protocol_Packet _packet;
   int _curr_byte_count;
   void _change_state(FSM_State next_state);
   void _reset();

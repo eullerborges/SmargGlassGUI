@@ -4,6 +4,7 @@
  */
 
 #include "Protocol_Packet.hpp"
+#include "cpp_src/crc.h"
 
 /**
  * Extrai um byte específico de um inteiro
@@ -42,12 +43,11 @@ void Protocol_Packet::reset() {
  */
 void Protocol_Packet::encode_data(int msg_type, std::string &bytes, std::string
                                          *res_buffer) {
-  start_frame = *(uint32_t*)START_FRAME;
-  uid = 0x11111111;
+  start_frame = *(uint16_t*)START_FRAME;
   message_type = (uint8_t) msg_type;
   seq_number = 0x22;
   data_size = (uint16_t) bytes.length();
-  crc = (uint32_t) 0x33333333;
+  crc = Crc_crc16Calc((uint8_t*)(bytes.c_str()), (uint16_t)(bytes.size()));
   data = bytes;
   serialize(res_buffer);
 }
@@ -60,7 +60,6 @@ void Protocol_Packet::encode_data(int msg_type, std::string &bytes, std::string
  */
 void Protocol_Packet::serialize(std::string *buffer) {
   addIntegerToString(buffer, start_frame, GETNUMBYTES(start_frame));
-  addIntegerToString(buffer, uid, GETNUMBYTES(uid));
   addIntegerToString(buffer, message_type, GETNUMBYTES(message_type));
   addIntegerToString(buffer, seq_number, GETNUMBYTES(seq_number));
   addIntegerToString(buffer, data_size, GETNUMBYTES(data_size));

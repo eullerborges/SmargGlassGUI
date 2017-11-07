@@ -8,6 +8,8 @@ ApplicationWindow {
     visible: true
     width: 640
     height: 680
+    //color: "transparent"
+    //flags: Qt.FramelessWindowHint
     title: qsTr("NiceGlass")
     property alias swipeView: swipeView
     property alias tabBar: tabBar

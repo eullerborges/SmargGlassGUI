@@ -3,6 +3,7 @@ import QtQuick 2.4
 LedButtonForm {
     id: button
     property string name
+    property int no // Número do led
     property double leftMarginModifier: 0
     property double topMarginModifier: 0
 
