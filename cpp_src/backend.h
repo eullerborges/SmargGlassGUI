@@ -36,7 +36,8 @@ public slots:
     void readData();
     void serialError();
     void serialParamsChanged(QString baudrateText, QString serialportText);
-    void sendNewLedConfig(int ledNumber, int redValue, int greenValue, int blueValue);
+    void sendNewLedConfig(int ledNumber, int redValue, int greenValue, int blueValue,
+                          float period, float workcycle, int blinks);
     void requestUpdate();
 };
 

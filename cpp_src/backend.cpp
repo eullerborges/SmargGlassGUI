@@ -139,7 +139,8 @@ void Backend::_encodeAndSendCommand(int mt, std::string data){
  * @param greenValue Valor da componente verde
  * @param blueValue Valor da componente azul
  */
-void Backend::sendNewLedConfig(int ledNumber, int redValue, int greenValue, int blueValue){
+void Backend::sendNewLedConfig(int ledNumber, int redValue, int greenValue, int blueValue,
+                               float period, float workcycle, int blinks){
     //qDebug() << "Sending new LED config for LED " << ledNumber << ", colors " << redValue << " " << greenValue << " " << blueValue;
     LedsValues ledValues;
     ledValues.set_commandid(20);
@@ -149,7 +150,16 @@ void Backend::sendNewLedConfig(int ledNumber, int redValue, int greenValue, int 
     led->set_red(colorComponentToLedStrength(redValue));
     led->set_green(colorComponentToLedStrength(greenValue));
     led->set_blue(colorComponentToLedStrength(blueValue));
+    if (period){
+        LedBlink *blinkValue = new LedBlink;
+        blinkValue->set_enable(true);
+        blinkValue->set_timeon((period*1000)*workcycle);
+        blinkValue->set_timeoff((period*1000)*(1-workcycle));
+        if(blinks) blinkValue->set_numblinks(blinks);
+        led->set_allocated_blink(blinkValue);
+    }
     qDebug() << "LED" << ledNumber << ", colors " << led->red() << " " << led->green() << " " << led->blue();
+    qDebug() << "Period: " << period << " WC: " << workcycle << " Blinks: " << blinks;
 
     // Enviando via serial
     _encodeAndSendCommand(MSG_SET_LEDS_VALUE, ledValues.SerializeAsString());

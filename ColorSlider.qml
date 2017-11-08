@@ -8,7 +8,7 @@ Item{
     property alias value: slider.value
     property alias backgroundColor: background.color
     property alias foregroundColor: foreground.color
-    property alias handleWidth: handleObj.width
+    property int handleWidth: 26
     property alias textSize: sliderText.font.pointSize
     property alias textColor: sliderText.color
     signal intensityChanged(Item slider_changed)
@@ -52,16 +52,7 @@ Item{
                 radius: 2
             }
         }
-        handle: Rectangle {
-            id: handleObj
-            x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
-            y: slider.topPadding + slider.availableHeight / 2 - height / 2
-            implicitWidth: 26
-            implicitHeight: 26
-            height: width
-            radius: width/2
-            color: slider.pressed ? "#f0f0f0" : "#f6f6f6"
-            border.color: "#bdbebf"
-        }
+        handle.width: handleWidth
+        handle.height: handle.width
     }
 }

@@ -16,5 +16,6 @@
         <file>TimerDial.qml</file>
         <file>ConfigurationWindow.qml</file>
         <file>ConfigurationWindowForm.ui.qml</file>
+        <file>SliderWithLabel.qml</file>
     </qresource>
 </RCC>
