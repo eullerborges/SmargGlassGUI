@@ -17,5 +17,6 @@
         <file>ConfigurationWindow.qml</file>
         <file>ConfigurationWindowForm.ui.qml</file>
         <file>SliderWithLabel.qml</file>
+        <file>HomePageButton.qml</file>
     </qresource>
 </RCC>

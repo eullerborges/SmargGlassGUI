@@ -1,19 +1,18 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 # Autor: Euller Borges
-""" Header do protocolo MaxPB"""
 import time
-import struct
+
 import serial
-import binascii
 import serial.threaded
-from CRC16 import CRC16
-from protobuf import Protocol_Commands_pb2 as ptcl_cmds
-from protobuf import Protocol_Leds_pb2 as ptcl_leds
 from protobuf_to_dict import protobuf_to_dict
+
+from protobuf import Protocol_Leds_pb2 as ptcl_leds
+from ProtocolPacket import ProtocolPacket, decode_maxpb
 
 # Importante usar pyserial mais recente.
 # http://pyserial.readthedocs.io/en/latest/tools.html#serial.tools.list_ports.ListPortInfo
+
 
 class ProcessData(serial.threaded.Protocol):
     def connection_made(self, transport):
@@ -35,6 +34,7 @@ class ProcessData(serial.threaded.Protocol):
             print(exc)
         print('port closed\n')
 
+
 class Estado:
     CHECK_HEADER = 0
     GET_MT = 1
@@ -43,55 +43,18 @@ class Estado:
     GET_CRC = 4
     GET_DATA = 5
 
-class ProtocolPacket:
-    """
-    Classe que define um pacote do protocolo MaxPB
-    """
-    START_FRAME = bytearray([0x55, 0x66])
-    def __init__(self):
-        self.header = 0
-        self.mt = 0
-        self.seq_number = 0
-        self.size = 0
-        self.crc = 0
-        self.payload = 0
-
-    def encode(self):
-        #calccrc = CRC16().calculate(str(self.payload))
-        calccrc = 0x8888
-        pct = self.START_FRAME + struct.pack('<BBHH', self.mt, self.seq_number, len(self.payload), calccrc)
-        return pct + self.payload
-
-    def decode(self, data):
-        self.header, self.mt, self.seq_number, self.size, self.crc = struct.unpack('<HBBHH', data[:8])
-        self.payload = bytes(data[8:])
-
-def decode_maxpb(data):
-    """
-    Decodifica um pacote maxpb
-    :param data: dados do pacote
-    :return: objeto com o pacote estruturado
-    :rtype: MaxPB_Packet
-    """
-    pacote_recebido = ProtocolPacket()
-    pacote_recebido.decode(data)
-    calccrc = CRC16().calculate(str(data[8:]))
-    if True: #pacote_recebido.crc == calccrc:
-        return pacote_recebido
-    else :
-        print("CRC inválido! Recebido= 0x%X, esperado= 0x%X" % (pacote_recebido.crc, calccrc))
-        return None
 
 class MaquinaEstado:
     """
     Classe que implementa a máquina de estados de recebimento de pacotes.
     """
-    header_recebido = bytearray()  # Header do pacote MaxPB recebido até o momento
+    header_recebido = bytearray(
+    )  # Header do pacote MaxPB recebido até o momento
     size = 0  # Tamanho do campo de dados
     corpo_pacote = bytearray()  # Corpo do pacote recebido, em bytes
     byteCount = 0  # Nùmero de bytes lidos
 
-    def __init__(self, state = Estado.CHECK_HEADER, callback = None, reset=False):
+    def __init__(self, state=Estado.CHECK_HEADER, callback=None, reset=False):
         """
         Construtor da classe
         :param state: Estado inicial da máquina de estado, padrão CHECK_HEADER
@@ -125,14 +88,15 @@ class MaquinaEstado:
         # Estado de checagem do header
         if self.estado == Estado.CHECK_HEADER:
             # se o header não foi inteiramente recebido
-            if self.byteCount < len(ProtocolPacket.START_FRAME): 
+            if self.byteCount < len(ProtocolPacket.START_FRAME):
                 # Sai se o byte lido não for 0x55
-                if self.byteCount == 0 and ord(byte) != ProtocolPacket.START_FRAME[0]:
+                if self.byteCount == 0 and ord(
+                        byte) != ProtocolPacket.START_FRAME[0]:
                     self.reset()
                     print("Incorrect header received. Dropping packet")
                     return None
                 self.header_recebido.append(byte)
-                 # Se  O header inteiro foi recebido
+                # Se  O header inteiro foi recebido
                 if self.byteCount == (len(ProtocolPacket.START_FRAME) - 1):
                     # Se o header hecebido não é o esperado
                     if self.header_recebido[:4] != ProtocolPacket.START_FRAME:
@@ -147,10 +111,10 @@ class MaquinaEstado:
                         return None
 
         if self.estado == Estado.GET_MT:
-            self.estado =Estado.GET_SEQ_NO
+            self.estado = Estado.GET_SEQ_NO
             print("GET MT")
             return None
-                
+
         if self.estado == Estado.GET_SEQ_NO:
             print("GET SEQ_NO")
             self.estado = Estado.GET_SIZE
@@ -161,7 +125,7 @@ class MaquinaEstado:
             if self.byteCount == 0:
                 self.size = ord(byte)
                 print("GET SIZE1")
-            else: # Recebidos os dois bytes do tamanho
+            else:  # Recebidos os dois bytes do tamanho
                 self.size += ord(byte) * 256
                 self.estado = Estado.GET_CRC
                 print("GET SIZE2: %s" % self.size)
@@ -171,7 +135,7 @@ class MaquinaEstado:
         if self.estado == Estado.GET_CRC:
             if self.byteCount == 0:
                 print("GET CRC1")
-            else: # Recebidos os dois bytes do tamanho
+            else:  # Recebidos os dois bytes do tamanho
                 self.estado = Estado.GET_DATA
                 print("GET CRC2")
                 self.byteCount = 0
@@ -179,8 +143,8 @@ class MaquinaEstado:
 
         # Estado que pega o resto
         if self.estado == Estado.GET_DATA:
-            print("GET DATA %d/%d" % (self.byteCount+1, self.size))
-            if self.byteCount == self.size - 1: # Hack:-1 pois vai somar um embaixo
+            print("GET DATA %d/%d" % (self.byteCount + 1, self.size))
+            if self.byteCount == self.size - 1:  # Hack:-1 pois vai somar um embaixo
                 pacote = decode_maxpb(self.corpo_pacote)
                 if self.callback:
                     self.callback(pacote)
@@ -190,7 +154,9 @@ class MaquinaEstado:
         # Contando o byte recebido
         self.byteCount += 1
 
+
 maqEstado = None
+
 
 def newPacket(packet):
     print("GOT COMPLETE PACKET! MT: 0x%X" % packet.mt)
@@ -199,13 +165,14 @@ def newPacket(packet):
     ledsValues.ParseFromString(packet.payload)
     print(protobuf_to_dict(ledsValues))
 
+
 if __name__ == '__main__':
-    ser = serial.Serial("/dev/pts/7",115200)
+    ser = serial.Serial("/dev/pts/7", 115200)
     maqEstado = MaquinaEstado(Estado.CHECK_HEADER, callback=newPacket)
     new_thread = serial.threaded.ReaderThread(ser, ProcessData)
     new_thread.start()
     mt = 0
-    while(1):
+    while (1):
         time.sleep(2)
         # pct = ProtocolPacket()
         # pct.mt = 0x84

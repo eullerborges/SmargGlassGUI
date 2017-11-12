@@ -46,7 +46,8 @@ HomePageForm {
         }
     }
 
-    serialConfigButton.onClicked: {configurationWindow.open()}
+    serialConfigButton.button.onClicked: {configurationWindow.open()}
+    fileConfigButton.button.onClicked: {fileDialog.open()}
     // Eventos de mudança do label de status da conexão
     onConnectionStatusChanged: {
         console.log("ConnectionStatusChanged! " + connectionStatus);
@@ -60,5 +61,16 @@ HomePageForm {
         homePage.chosenLed = chosen_led
         //swipeView.currentIndex = 1
         swipeView.setCurrentIndex(1)
+    }
+    fileDialog.onAccepted: {
+        var path = fileDialog.fileUrl.toString();
+        // remove prefixed "file:///"
+        path = path.replace(/^(file:\/{2})/,"");
+        // unescape html codes like '%23' for '#'
+        var cleanPath = decodeURIComponent(path);
+        backend.loadFile(cleanPath)
+    }
+    fileDialog.onRejected: {
+        console.log("Canceled")
     }
 }

@@ -16,7 +16,7 @@ Item {
     Pane{
         id: ledNamePane
         anchors.top: parent.top
-        anchors.topMargin: 10
+        anchors.topMargin: 5
         anchors.horizontalCenter: parent.horizontalCenter
         width: 0.7 * parent.width
         background: Rectangle {color: "#5294a8"; radius: slidersPane.height/20}

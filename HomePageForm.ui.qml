@@ -12,6 +12,8 @@ Item {
     property alias connectionStatus: infoPane.connectionStatus
     property alias infoPaneStatusLabel: infoPaneStatusLabel
     property alias serialConfigButton: serialConfigButton
+    property alias fileConfigButton: fileConfigButton
+    property alias fileDialog: fileDialog
     property LedButton chosenLed: led1
     property color bg_color: "#b3e7f7"
 
@@ -72,9 +74,11 @@ Item {
             property string connectionStatus: "Disconnected"
             background: Rectangle {color: bg_color; border.color: "#388da7"; radius: width/36; border.width: 1}
             Row{
+                id: connectedRow
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: parent.width/20
+                width: 0.5 * parent.width
                 Label{
                     id: infoPaneLabel1
                     text: "Status: "
@@ -88,41 +92,32 @@ Item {
                     font.pixelSize: infoPane.height/3
                 }
             }
-            Pane{
-                id: serialConfigPane
-                width: infoPane.width * 1/3
-                height: infoPane.height - 2 * infoPane.background.border.width
+            HomePageButton{
+                id: serialConfigButton
+                width: 0.25 * parent.width
+                //width: (infoPane.width - connectedRow.width)/2
+                height: infoPane.height - 4 * infoPane.background.border.width
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
                 anchors.rightMargin: width/10
-                background: Rectangle{color: bg_color}
-                Button{
-                    id: serialConfigButton
-                    anchors.centerIn: parent
-                    height: 0.8 * parent.parent.height
-                    width: parent.parent.width
-                    text: "Serial Config"
-                    font.pointSize: height? height/2 : 16
-                    contentItem: Text {
-                        id: innerText
-                        text: serialConfigButton.text
-                        font: serialConfigButton.font
-                        opacity: enabled ? 1.0 : 0.3
-                        color: serialConfigButton.down ? "#388da7" : "#4CC7EC"
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                        elide: Text.ElideRight
-                    }
-                    background: Rectangle {
-                        implicitWidth: 100
-                        implicitHeight: 40
-                        opacity: enabled ? 1 : 0.3
-                        border.color: serialConfigButton.down ? "#388da7" : "#4CC7EC"
-                        border.width: 1
-                        radius: 2
-                    }
-                }
+                text: "Serial Config"
+            }
+            HomePageButton{
+                id: fileConfigButton
+                width: 0.25 * parent.width
+                height: infoPane.height - 4 * infoPane.background.border.width
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: serialConfigButton.left
+                anchors.rightMargin: width/20
+                text: "Arquivo"
+                enabled: homePage.connectionStatus == "Connected"? true : false
             }
         }
+    }
+    // File dialog para selecionar arquivo de configuração
+    FileDialog { id: fileDialog
+        title: "Please choose a file"
+        folder: shortcuts.home
+        visible: false
     }
 }

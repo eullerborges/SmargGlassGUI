@@ -155,7 +155,12 @@ void Backend::sendNewLedConfig(int ledNumber, int redValue, int greenValue, int 
         blinkValue->set_enable(true);
         blinkValue->set_timeon((period*1000)*workcycle);
         blinkValue->set_timeoff((period*1000)*(1-workcycle));
-        if(blinks) blinkValue->set_numblinks(blinks);
+        blinkValue->set_numblinks(blinks);
+        led->set_allocated_blink(blinkValue);
+    }
+    else{
+        LedBlink *blinkValue = new LedBlink;
+        blinkValue->set_enable(false);
         led->set_allocated_blink(blinkValue);
     }
     qDebug() << "LED" << ledNumber << ", colors " << led->red() << " " << led->green() << " " << led->blue();
@@ -173,4 +178,30 @@ void Backend::requestUpdate(){
         led->set_number((LedNumber)i);
     }
     _encodeAndSendCommand(MSG_REQUEST_LEDS_STATUS, getLedsStatus.SerializeAsString());
+}
+
+void Backend::loadFile(QString fileName){
+    qDebug() << "File selected: " << fileName;
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly)){
+        qDebug() << "Cannot open file!";
+        return;
+    }
+    QByteArray fileData = file.read(file.size());
+    qDebug() << "File size: " << file.size();
+    qDebug() << "File len: " << fileData.length();
+    std::string str = string_to_hex(fileData.toStdString());
+    qDebug() << "StrLen: " << str.length();
+    qDebug() << string_to_hex(fileData.toStdString()).data();
+    LedsValues ledValues;
+    ledValues.ParseFromString(fileData.toStdString());
+    qDebug() << "LED: " << ledValues.leds(0).number() << " R:" << ledValues.leds(0).red() <<
+                " G:" << ledValues.leds(0).green() << " B:" << ledValues.leds(0).blue();
+    _encodeAndSendCommand(MSG_SET_LEDS_VALUE, fileData.toStdString());
+//    while (!file.atEnd()) {
+//        qDebug() << "NLine: ";
+//        QByteArray line = file.readAll();
+//        qDebug() << "Line: " << line;
+//    }
+//    qDebug() << "File ended!";
 }

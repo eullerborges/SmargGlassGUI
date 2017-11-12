@@ -53,22 +53,3 @@ Item {
         }
     ]
 }
-
-//Item{
-//    id: ledButton
-//    signal chosen
-//    property alias internalButton: internalButton
-//    anchors.top: parent.top
-//    anchors.left: parent.left
-//    Button {
-//        id: internalButton
-//        height: 10
-//        width: 10
-//        text: qsTr("Button")
-//        background: Rectangle {
-//            radius: 8
-//            color:  internalButton.pressed? "#f6f6f6" : "#d4a2e2"
-
-//        }
-//    }
-//}

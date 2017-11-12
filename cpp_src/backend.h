@@ -39,6 +39,7 @@ public slots:
     void sendNewLedConfig(int ledNumber, int redValue, int greenValue, int blueValue,
                           float period, float workcycle, int blinks);
     void requestUpdate();
+    void loadFile(QString fileName);
 };
 
 #endif // BACKEND_H
