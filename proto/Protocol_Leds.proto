@@ -1,0 +1,74 @@
+syntax = "proto2";
+
+enum LedNumber {
+	LED_RGB_1 = 0;
+	LED_RGB_2 = 1;
+	LED_RGB_3 = 2;
+	LED_RGB_4 = 3;
+	LED_RGB_5 = 4;
+	LED_RGB_6 = 5;
+	LED_RGB_7 = 6;
+	LED_RGB_8 = 7;
+	LED_RGB_9 = 8;
+	LED_RGB_10 = 9;
+	LED_RGB_11 = 10;
+	LED_RGB_12 = 11;
+	LED_RGB_13 = 12;
+	LED_RGB_14 = 13;
+	LED_RGB_15 = 14;
+	LED_RGB_16 = 15;
+	LED_RGB_17 = 16;
+	LED_RGB_18 = 17;
+	LED_RGB_19 = 18;
+	LED_RGB_20 = 19;
+}
+
+enum LedState {
+	LED_OFF = 0;
+	LED_ON = 1;
+}
+
+enum LedStrength {
+	STRENGTH_0 = 0;
+	STRENGTH_25 = 1;
+	STRENGTH_50 = 2;
+	STRENGTH_100 = 3;
+}
+
+
+message LedsConfig {
+	required uint32 commandID = 1;
+	required float pwm1DutyCicle = 2;
+	required float pwm2DutyCicle = 3;
+}
+
+message LedBlink {
+	required bool enable = 1;
+	optional LedState state = 2;
+	optional uint32 timeOn = 3;
+	optional uint32 timeOff = 4;
+	optional uint32 numBlinks = 5;
+}
+
+message LedRgb {
+	required LedNumber number = 1;
+	required LedStrength red = 2;
+	required LedStrength green = 3;
+	required LedStrength blue = 4;
+	optional LedBlink blink = 5;
+}
+
+message LedsValues {
+	required uint32 commandID = 1;
+	repeated LedRgb leds = 2;
+}
+
+message LedStatusRequest{
+	required LedNumber number = 1;
+	optional bool sendBlink = 2;
+}
+
+message GetLedsStatus{
+	required uint32 commandID = 1;
+	repeated LedStatusRequest leds = 2;
+}

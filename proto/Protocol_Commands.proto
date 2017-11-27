@@ -1,0 +1,20 @@
+syntax = "proto2";
+
+enum NackReasons {
+    INVALID_MSG_TYPE = 0;
+    INVALID_DATA = 1;
+    DECODE_ERROR = 2;
+ }
+
+ message Nack {
+ 	required uint32 commandID = 1;
+ 	required NackReasons nackReason = 2;
+}
+
+message Ack{
+	required uint32 commandID = 1;
+}
+
+message BasicCommand{
+	required uint32 commandID = 1;
+}

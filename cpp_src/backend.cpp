@@ -2,8 +2,10 @@
 #include "Protocol_MTs.h"
 #include "cpp_src/crc.h"
 #include "cpp_src/utils.h"
+#include <QTimer>
 #include <stdint.h>
 
+#define DELETE_SET_NULL(x) if(x) {delete(x); x = NULL;}
 
 /**
  * @brief Construtor da classe
@@ -30,6 +32,8 @@ Backend::Backend(QObject *parent) : QObject(parent),
     //    _serial.flush();
     curSerialPort = "/dev/pts/11";
     curBaudrate = "115200";
+    autosendFileConfig = NULL;
+    autosendTimer = NULL;
 }
 
 /**
@@ -57,12 +61,17 @@ void Backend::readData(){
  */
 void Backend::serialError(){
     QString error = _serial.errorString();
+    if (autosendTimer) {
+        delete autosendTimer;
+        autosendTimer = NULL;
+    }
     if(error == "Device is not open"){
         serialClosed();
     }
     else if(error != "No error"){
         qDebug() << "Serial error: " << error;
         serialClosed();
+        emit newMsgDialog("Erro na serial", QString(error));
     }
 }
 
@@ -96,25 +105,25 @@ void Backend::parseProtocolPacket(int message_type, std::string data){
     qDebug() << ++count << ")Packet received! MT: " << message_type << " DATA:"  << string_to_hex(data).c_str();
     switch (message_type){
         case MSG_LEDS_STATUS:
-        qDebug() << ++count << ")Packet received! MT: " << message_type << " DATA:"  << string_to_hex(data).c_str();
-        LedsValues ledValues;
-        bool res = ledValues.ParseFromString(data);
-        if (!res) {
-            qDebug() << "Packet decoding failed for MT " << message_type << " !";
-            return;
-        }
-        qDebug() << "LEDs size: " << ledValues.leds_size();
-        for (int i=0; i < ledValues.leds_size(); i++){
-            LedRgb led = ledValues.leds(i);
-            LedNumber number = led.number();
-            double str_red = convertRGB(led.red());
-            double str_blue = convertRGB(led.blue());
-            double str_green = convertRGB(led.green());
-            //qDebug() << "LED " << number << " changed status " << str_red << str_green << str_blue;
-            QColor resulting_color = QColor::fromRgb(str_red, str_green, str_blue);
-            emit ledColorChanged(number, resulting_color);
-        }
-        break;
+            qDebug() << ++count << ")Packet received! MT: " << message_type << " DATA:"  << string_to_hex(data).c_str();
+            LedsValues ledValues;
+            bool res = ledValues.ParseFromString(data);
+            if (!res) {
+                qDebug() << "Packet decoding failed for MT " << message_type << " !";
+                return;
+            }
+            qDebug() << "LEDs size: " << ledValues.leds_size();
+            for (int i=0; i < ledValues.leds_size(); i++){
+                LedRgb led = ledValues.leds(i);
+                LedNumber number = led.number();
+                double str_red = convertRGB(led.red());
+                double str_blue = convertRGB(led.blue());
+                double str_green = convertRGB(led.green());
+                //qDebug() << "LED " << number << " changed status " << str_red << str_green << str_blue;
+                QColor resulting_color = QColor::fromRgb(str_red, str_green, str_blue);
+                emit ledColorChanged(number, resulting_color);
+            }
+            break;
     }
 }
 
@@ -127,7 +136,7 @@ void Backend::_encodeAndSendCommand(int mt, std::string data){
     Protocol_Packet pckt;
     std::string encoded_out;
     pckt.encode_data(mt, data, &encoded_out);
-    qDebug() << "Packet sent: " << string_to_hex(encoded_out).c_str();
+    //qDebug() << "Packet sent: " << string_to_hex(encoded_out).c_str();
     _serial.write(encoded_out.c_str(), encoded_out.size());
 
 }
@@ -170,6 +179,12 @@ void Backend::sendNewLedConfig(int ledNumber, int redValue, int greenValue, int 
     _encodeAndSendCommand(MSG_SET_LEDS_VALUE, ledValues.SerializeAsString());
 }
 
+/**
+ * @brief Envio pedido de atualização para o óculos
+ *
+ * O pedido é enviado com o fim de atualizar a interface no início do
+ * programa. são pedidos status de todos os 20 LEDs.
+ */
 void Backend::requestUpdate(){
     GetLedsStatus getLedsStatus;
     getLedsStatus.set_commandid(10);
@@ -180,6 +195,16 @@ void Backend::requestUpdate(){
     _encodeAndSendCommand(MSG_REQUEST_LEDS_STATUS, getLedsStatus.SerializeAsString());
 }
 
+/**
+ * @brief Carrega um arquivo de configuração dos LEDs.
+ *
+ * Carrega o arquivo com um comando FileConfig codificado, que permit enviar
+ * configurações dos LEDs previamente codificadas em um arquivo. Se a configuração de
+ * envio periódico foi habilitada, configura o timer apropriado para realizar o envio
+ * temporizado.
+ *
+ * @param fileName nome do arquivo
+ */
 void Backend::loadFile(QString fileName){
     qDebug() << "File selected: " << fileName;
     QFile file(fileName);
@@ -190,18 +215,49 @@ void Backend::loadFile(QString fileName){
     QByteArray fileData = file.read(file.size());
     qDebug() << "File size: " << file.size();
     qDebug() << "File len: " << fileData.length();
-    std::string str = string_to_hex(fileData.toStdString());
-    qDebug() << "StrLen: " << str.length();
-    qDebug() << string_to_hex(fileData.toStdString()).data();
-    LedsValues ledValues;
-    ledValues.ParseFromString(fileData.toStdString());
-    qDebug() << "LED: " << ledValues.leds(0).number() << " R:" << ledValues.leds(0).red() <<
-                " G:" << ledValues.leds(0).green() << " B:" << ledValues.leds(0).blue();
-    _encodeAndSendCommand(MSG_SET_LEDS_VALUE, fileData.toStdString());
-//    while (!file.atEnd()) {
-//        qDebug() << "NLine: ";
-//        QByteArray line = file.readAll();
-//        qDebug() << "Line: " << line;
-//    }
-//    qDebug() << "File ended!";
+//    std::string str = string_to_hex(fileData.toStdString());
+//    qDebug() << "StrLen: " << str.length();
+//    qDebug() << string_to_hex(fileData.toStdString()).data();
+    FileConfig *fileConfig = new FileConfig();
+    if (!fileConfig->ParseFromString(fileData.toStdString())) {
+        qDebug() << "Error parsing file!";
+        return;
+    }
+    LedsValues *ledValues = fileConfig->mutable_repledsvalues(0);
+    qDebug() << "LED: " << ledValues->leds(0).number() << " R:" << ledValues->leds(0).red() <<
+                " G:" << ledValues->leds(0).green() << " B:" << ledValues->leds(0).blue();
+    _encodeAndSendCommand(MSG_SET_LEDS_VALUE, ledValues->SerializeAsString());
+    // Apagando timer se tiver sido previamente instanciado.
+    if (autosendTimer) DELETE_SET_NULL(autosendTimer);
+    // Se há configuração para envio periódico, guardar dados.
+    if (fileConfig->has_timingconfig()){
+        qDebug() << "Timing Config!";
+        if (autosendFileConfig) DELETE_SET_NULL(autosendFileConfig);
+        qDebug() << "0";
+        autosendFileConfig = fileConfig;
+        qDebug() << "Timer Period: " << fileConfig->timingconfig().period();
+        autosendPeriod = fileConfig->timingconfig().period();
+        // O timer começa a enviar a partir do segundo índice
+        autosendCurIndex = 1;
+        // Criando o timer
+        autosendTimer = new QTimer(this);
+        // Configurando o callback do timer
+        connect(autosendTimer, &QTimer::timeout, this, &Backend::autosendLedsConfig);
+        autosendTimer->start(autosendPeriod); // Iniciando o timer
+    }
+    else{
+        DELETE_SET_NULL(fileConfig);
+    }
+}
+
+/**
+ * @brief Envia configuração previamente codificada em arquivo para os LEDs
+ *
+ * Este é o callback do timer responsável por enviar a configuração codificada
+ * em um arquivo carregado via interface gráfica.
+ */
+void Backend::autosendLedsConfig() {
+    autosendCurIndex %= autosendFileConfig->repledsvalues_size();
+    LedsValues *ledValues = autosendFileConfig->mutable_repledsvalues(autosendCurIndex++);
+    _encodeAndSendCommand(MSG_SET_LEDS_VALUE, ledValues->SerializeAsString());
 }

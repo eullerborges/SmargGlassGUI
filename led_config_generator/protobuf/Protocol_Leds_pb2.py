@@ -19,7 +19,7 @@ _sym_db = _symbol_database.Default()
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='Protocol_Leds.proto',
   package='',
-  serialized_pb=_b('\n\x13Protocol_Leds.proto\"M\n\nLedsConfig\x12\x11\n\tcommandID\x18\x01 \x02(\r\x12\x15\n\rpwm1DutyCicle\x18\x02 \x02(\x02\x12\x15\n\rpwm2DutyCicle\x18\x03 \x02(\x02\"h\n\x08LedBlink\x12\x0e\n\x06\x65nable\x18\x01 \x02(\x08\x12\x18\n\x05state\x18\x02 \x01(\x0e\x32\t.LedState\x12\x0e\n\x06timeOn\x18\x03 \x01(\r\x12\x0f\n\x07timeOff\x18\x04 \x01(\r\x12\x11\n\tnumBlinks\x18\x05 \x01(\r\"\x92\x01\n\x06LedRgb\x12\x1a\n\x06number\x18\x01 \x02(\x0e\x32\n.LedNumber\x12\x19\n\x03red\x18\x02 \x02(\x0e\x32\x0c.LedStrength\x12\x1b\n\x05green\x18\x03 \x02(\x0e\x32\x0c.LedStrength\x12\x1a\n\x04\x62lue\x18\x04 \x02(\x0e\x32\x0c.LedStrength\x12\x18\n\x05\x62link\x18\x05 \x01(\x0b\x32\t.LedBlink\"6\n\nLedsValues\x12\x11\n\tcommandID\x18\x01 \x02(\r\x12\x15\n\x04leds\x18\x02 \x03(\x0b\x32\x07.LedRgb*\xd1\x02\n\tLedNumber\x12\r\n\tLED_RGB_0\x10\x00\x12\r\n\tLED_RGB_1\x10\x01\x12\r\n\tLED_RGB_2\x10\x02\x12\r\n\tLED_RGB_3\x10\x03\x12\r\n\tLED_RGB_4\x10\x04\x12\r\n\tLED_RGB_5\x10\x05\x12\r\n\tLED_RGB_6\x10\x06\x12\r\n\tLED_RGB_7\x10\x07\x12\r\n\tLED_RGB_8\x10\x08\x12\r\n\tLED_RGB_9\x10\t\x12\x0e\n\nLED_RGB_10\x10\n\x12\x0e\n\nLED_RGB_11\x10\x0b\x12\x0e\n\nLED_RGB_12\x10\x0c\x12\x0e\n\nLED_RGB_13\x10\r\x12\x0e\n\nLED_RGB_14\x10\x0e\x12\x0e\n\nLED_RGB_15\x10\x0f\x12\x0e\n\nLED_RGB_16\x10\x10\x12\x0e\n\nLED_RGB_17\x10\x11\x12\x0e\n\nLED_RGB_18\x10\x12\x12\x0e\n\nLED_RGB_19\x10\x13\x12\x0e\n\nLED_RGB_20\x10\x14*#\n\x08LedState\x12\x0b\n\x07LED_OFF\x10\x00\x12\n\n\x06LED_ON\x10\x01*Q\n\x0bLedStrength\x12\x0e\n\nSTRENGTH_0\x10\x00\x12\x0f\n\x0bSTRENGTH_25\x10\x01\x12\x0f\n\x0bSTRENGTH_50\x10\x02\x12\x10\n\x0cSTRENGTH_100\x10\x03')
+  serialized_pb=_b('\n\x13Protocol_Leds.proto\"M\n\nLedsConfig\x12\x11\n\tcommandID\x18\x01 \x02(\r\x12\x15\n\rpwm1DutyCicle\x18\x02 \x02(\x02\x12\x15\n\rpwm2DutyCicle\x18\x03 \x02(\x02\"h\n\x08LedBlink\x12\x0e\n\x06\x65nable\x18\x01 \x02(\x08\x12\x18\n\x05state\x18\x02 \x01(\x0e\x32\t.LedState\x12\x0e\n\x06timeOn\x18\x03 \x01(\r\x12\x0f\n\x07timeOff\x18\x04 \x01(\r\x12\x11\n\tnumBlinks\x18\x05 \x01(\r\"\x92\x01\n\x06LedRgb\x12\x1a\n\x06number\x18\x01 \x02(\x0e\x32\n.LedNumber\x12\x19\n\x03red\x18\x02 \x02(\x0e\x32\x0c.LedStrength\x12\x1b\n\x05green\x18\x03 \x02(\x0e\x32\x0c.LedStrength\x12\x1a\n\x04\x62lue\x18\x04 \x02(\x0e\x32\x0c.LedStrength\x12\x18\n\x05\x62link\x18\x05 \x01(\x0b\x32\t.LedBlink\"6\n\nLedsValues\x12\x11\n\tcommandID\x18\x01 \x02(\r\x12\x15\n\x04leds\x18\x02 \x03(\x0b\x32\x07.LedRgb\"A\n\x10LedStatusRequest\x12\x1a\n\x06number\x18\x01 \x02(\x0e\x32\n.LedNumber\x12\x11\n\tsendBlink\x18\x02 \x01(\x08\"C\n\rGetLedsStatus\x12\x11\n\tcommandID\x18\x01 \x02(\r\x12\x1f\n\x04leds\x18\x02 \x03(\x0b\x32\x11.LedStatusRequest*\xc2\x02\n\tLedNumber\x12\r\n\tLED_RGB_1\x10\x00\x12\r\n\tLED_RGB_2\x10\x01\x12\r\n\tLED_RGB_3\x10\x02\x12\r\n\tLED_RGB_4\x10\x03\x12\r\n\tLED_RGB_5\x10\x04\x12\r\n\tLED_RGB_6\x10\x05\x12\r\n\tLED_RGB_7\x10\x06\x12\r\n\tLED_RGB_8\x10\x07\x12\r\n\tLED_RGB_9\x10\x08\x12\x0e\n\nLED_RGB_10\x10\t\x12\x0e\n\nLED_RGB_11\x10\n\x12\x0e\n\nLED_RGB_12\x10\x0b\x12\x0e\n\nLED_RGB_13\x10\x0c\x12\x0e\n\nLED_RGB_14\x10\r\x12\x0e\n\nLED_RGB_15\x10\x0e\x12\x0e\n\nLED_RGB_16\x10\x0f\x12\x0e\n\nLED_RGB_17\x10\x10\x12\x0e\n\nLED_RGB_18\x10\x11\x12\x0e\n\nLED_RGB_19\x10\x12\x12\x0e\n\nLED_RGB_20\x10\x13*#\n\x08LedState\x12\x0b\n\x07LED_OFF\x10\x00\x12\n\n\x06LED_ON\x10\x01*Q\n\x0bLedStrength\x12\x0e\n\nSTRENGTH_0\x10\x00\x12\x0f\n\x0bSTRENGTH_25\x10\x01\x12\x0f\n\x0bSTRENGTH_50\x10\x02\x12\x10\n\x0cSTRENGTH_100\x10\x03')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -30,94 +30,90 @@ _LEDNUMBER = _descriptor.EnumDescriptor(
   file=DESCRIPTOR,
   values=[
     _descriptor.EnumValueDescriptor(
-      name='LED_RGB_0', index=0, number=0,
+      name='LED_RGB_1', index=0, number=0,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='LED_RGB_1', index=1, number=1,
+      name='LED_RGB_2', index=1, number=1,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='LED_RGB_2', index=2, number=2,
+      name='LED_RGB_3', index=2, number=2,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='LED_RGB_3', index=3, number=3,
+      name='LED_RGB_4', index=3, number=3,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='LED_RGB_4', index=4, number=4,
+      name='LED_RGB_5', index=4, number=4,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='LED_RGB_5', index=5, number=5,
+      name='LED_RGB_6', index=5, number=5,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='LED_RGB_6', index=6, number=6,
+      name='LED_RGB_7', index=6, number=6,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='LED_RGB_7', index=7, number=7,
+      name='LED_RGB_8', index=7, number=7,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='LED_RGB_8', index=8, number=8,
+      name='LED_RGB_9', index=8, number=8,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='LED_RGB_9', index=9, number=9,
+      name='LED_RGB_10', index=9, number=9,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='LED_RGB_10', index=10, number=10,
+      name='LED_RGB_11', index=10, number=10,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='LED_RGB_11', index=11, number=11,
+      name='LED_RGB_12', index=11, number=11,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='LED_RGB_12', index=12, number=12,
+      name='LED_RGB_13', index=12, number=12,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='LED_RGB_13', index=13, number=13,
+      name='LED_RGB_14', index=13, number=13,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='LED_RGB_14', index=14, number=14,
+      name='LED_RGB_15', index=14, number=14,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='LED_RGB_15', index=15, number=15,
+      name='LED_RGB_16', index=15, number=15,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='LED_RGB_16', index=16, number=16,
+      name='LED_RGB_17', index=16, number=16,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='LED_RGB_17', index=17, number=17,
+      name='LED_RGB_18', index=17, number=17,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='LED_RGB_18', index=18, number=18,
+      name='LED_RGB_19', index=18, number=18,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='LED_RGB_19', index=19, number=19,
-      options=None,
-      type=None),
-    _descriptor.EnumValueDescriptor(
-      name='LED_RGB_20', index=20, number=20,
+      name='LED_RGB_20', index=19, number=19,
       options=None,
       type=None),
   ],
   containing_type=None,
   options=None,
-  serialized_start=414,
-  serialized_end=751,
+  serialized_start=550,
+  serialized_end=872,
 )
 _sym_db.RegisterEnumDescriptor(_LEDNUMBER)
 
@@ -139,8 +135,8 @@ _LEDSTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=753,
-  serialized_end=788,
+  serialized_start=874,
+  serialized_end=909,
 )
 _sym_db.RegisterEnumDescriptor(_LEDSTATE)
 
@@ -170,33 +166,32 @@ _LEDSTRENGTH = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=790,
-  serialized_end=871,
+  serialized_start=911,
+  serialized_end=992,
 )
 _sym_db.RegisterEnumDescriptor(_LEDSTRENGTH)
 
 LedStrength = enum_type_wrapper.EnumTypeWrapper(_LEDSTRENGTH)
-LED_RGB_0 = 0
-LED_RGB_1 = 1
-LED_RGB_2 = 2
-LED_RGB_3 = 3
-LED_RGB_4 = 4
-LED_RGB_5 = 5
-LED_RGB_6 = 6
-LED_RGB_7 = 7
-LED_RGB_8 = 8
-LED_RGB_9 = 9
-LED_RGB_10 = 10
-LED_RGB_11 = 11
-LED_RGB_12 = 12
-LED_RGB_13 = 13
-LED_RGB_14 = 14
-LED_RGB_15 = 15
-LED_RGB_16 = 16
-LED_RGB_17 = 17
-LED_RGB_18 = 18
-LED_RGB_19 = 19
-LED_RGB_20 = 20
+LED_RGB_1 = 0
+LED_RGB_2 = 1
+LED_RGB_3 = 2
+LED_RGB_4 = 3
+LED_RGB_5 = 4
+LED_RGB_6 = 5
+LED_RGB_7 = 6
+LED_RGB_8 = 7
+LED_RGB_9 = 8
+LED_RGB_10 = 9
+LED_RGB_11 = 10
+LED_RGB_12 = 11
+LED_RGB_13 = 12
+LED_RGB_14 = 13
+LED_RGB_15 = 14
+LED_RGB_16 = 15
+LED_RGB_17 = 16
+LED_RGB_18 = 17
+LED_RGB_19 = 18
+LED_RGB_20 = 19
 LED_OFF = 0
 LED_ON = 1
 STRENGTH_0 = 0
@@ -402,6 +397,80 @@ _LEDSVALUES = _descriptor.Descriptor(
   serialized_end=411,
 )
 
+
+_LEDSTATUSREQUEST = _descriptor.Descriptor(
+  name='LedStatusRequest',
+  full_name='LedStatusRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='number', full_name='LedStatusRequest.number', index=0,
+      number=1, type=14, cpp_type=8, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='sendBlink', full_name='LedStatusRequest.sendBlink', index=1,
+      number=2, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=413,
+  serialized_end=478,
+)
+
+
+_GETLEDSSTATUS = _descriptor.Descriptor(
+  name='GetLedsStatus',
+  full_name='GetLedsStatus',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='commandID', full_name='GetLedsStatus.commandID', index=0,
+      number=1, type=13, cpp_type=3, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='leds', full_name='GetLedsStatus.leds', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=480,
+  serialized_end=547,
+)
+
 _LEDBLINK.fields_by_name['state'].enum_type = _LEDSTATE
 _LEDRGB.fields_by_name['number'].enum_type = _LEDNUMBER
 _LEDRGB.fields_by_name['red'].enum_type = _LEDSTRENGTH
@@ -409,10 +478,14 @@ _LEDRGB.fields_by_name['green'].enum_type = _LEDSTRENGTH
 _LEDRGB.fields_by_name['blue'].enum_type = _LEDSTRENGTH
 _LEDRGB.fields_by_name['blink'].message_type = _LEDBLINK
 _LEDSVALUES.fields_by_name['leds'].message_type = _LEDRGB
+_LEDSTATUSREQUEST.fields_by_name['number'].enum_type = _LEDNUMBER
+_GETLEDSSTATUS.fields_by_name['leds'].message_type = _LEDSTATUSREQUEST
 DESCRIPTOR.message_types_by_name['LedsConfig'] = _LEDSCONFIG
 DESCRIPTOR.message_types_by_name['LedBlink'] = _LEDBLINK
 DESCRIPTOR.message_types_by_name['LedRgb'] = _LEDRGB
 DESCRIPTOR.message_types_by_name['LedsValues'] = _LEDSVALUES
+DESCRIPTOR.message_types_by_name['LedStatusRequest'] = _LEDSTATUSREQUEST
+DESCRIPTOR.message_types_by_name['GetLedsStatus'] = _GETLEDSSTATUS
 DESCRIPTOR.enum_types_by_name['LedNumber'] = _LEDNUMBER
 DESCRIPTOR.enum_types_by_name['LedState'] = _LEDSTATE
 DESCRIPTOR.enum_types_by_name['LedStrength'] = _LEDSTRENGTH
@@ -444,6 +517,20 @@ LedsValues = _reflection.GeneratedProtocolMessageType('LedsValues', (_message.Me
   # @@protoc_insertion_point(class_scope:LedsValues)
   ))
 _sym_db.RegisterMessage(LedsValues)
+
+LedStatusRequest = _reflection.GeneratedProtocolMessageType('LedStatusRequest', (_message.Message,), dict(
+  DESCRIPTOR = _LEDSTATUSREQUEST,
+  __module__ = 'Protocol_Leds_pb2'
+  # @@protoc_insertion_point(class_scope:LedStatusRequest)
+  ))
+_sym_db.RegisterMessage(LedStatusRequest)
+
+GetLedsStatus = _reflection.GeneratedProtocolMessageType('GetLedsStatus', (_message.Message,), dict(
+  DESCRIPTOR = _GETLEDSSTATUS,
+  __module__ = 'Protocol_Leds_pb2'
+  # @@protoc_insertion_point(class_scope:GetLedsStatus)
+  ))
+_sym_db.RegisterMessage(GetLedsStatus)
 
 
 # @@protoc_insertion_point(module_scope)

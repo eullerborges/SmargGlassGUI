@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import QtQuick.Dialogs 1.1
 import Backend 1.0
 
 ApplicationWindow {
@@ -59,5 +60,16 @@ ApplicationWindow {
     Backend{
         id: backend
         onSerialOpened: console.debug("Opened");
+        onNewMsgDialog: {
+            msgDialog.title = title;
+            msgDialog.text = msg;
+            msgDialog.open();
+        }
+    }
+    MessageDialog {
+        id: msgDialog
+        title: "stdtitle"
+        text: "stdtext"
+        //standardButtons: Dialog.Ok
     }
 }

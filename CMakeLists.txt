@@ -12,8 +12,8 @@ find_package(Protobuf REQUIRED)
 
 include_directories(cpp_src cpp_src/protobuf)
 set(SOURCES main.cpp qml.qrc cpp_src/backend.cpp cpp_src/ProtocolFSM.cpp cpp_src/Protocol_Packet.cpp
-    cpp_src/protobuf/Protocol_Commands.pb.cc cpp_src/protobuf/Protocol_Leds.pb.cc cpp_src/crc.cpp
-    cpp_src/utils.cpp)
+    cpp_src/protobuf/Protocol_Commands.pb.cc cpp_src/protobuf/Protocol_Leds.pb.cc cpp_src/protobuf/fileconfig.pb.cc
+    cpp_src/crc.cpp cpp_src/utils.cpp)
 set(HEADERS cpp_src/backend.h cpp_src/ProtocolFSM.hpp cpp_src/Protocol_Packet.hpp cpp_src/Protocol_MTs.h
     cpp_src/crc.h cpp_src/utils.h)
 

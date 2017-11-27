@@ -5,13 +5,21 @@ import time
 
 import serial
 import serial.threaded
-from protobuf_to_dict import protobuf_to_dict
+import Protocol_MTs as mts
+#from protobuf_to_dict import protobuf_to_dict
 
 from protobuf import Protocol_Leds_pb2 as ptcl_leds
 from ProtocolPacket import ProtocolPacket, decode_maxpb
 
 # Importante usar pyserial mais recente.
 # http://pyserial.readthedocs.io/en/latest/tools.html#serial.tools.list_ports.ListPortInfo
+
+DEBUG_FSM = False
+
+
+def print_debug_fsm(msg):
+    if DEBUG_FSM:
+        print(msg)
 
 
 class ProcessData(serial.threaded.Protocol):
@@ -25,7 +33,7 @@ class ProcessData(serial.threaded.Protocol):
 
     def data_received(self, data):
         for byte in data:
-            print("GOT BYTE! 0x%x" % ord(byte))
+            #print("GOT BYTE! 0x%x" % ord(byte))
             global maqEstado
             maqEstado.parseByte(byte)
 
@@ -93,14 +101,16 @@ class MaquinaEstado:
                 if self.byteCount == 0 and ord(
                         byte) != ProtocolPacket.START_FRAME[0]:
                     self.reset()
-                    print("Incorrect header received. Dropping packet")
+                    print_debug_fsm(
+                        "Incorrect header received. Dropping packet")
                     return None
                 self.header_recebido.append(byte)
                 # Se  O header inteiro foi recebido
                 if self.byteCount == (len(ProtocolPacket.START_FRAME) - 1):
                     # Se o header hecebido não é o esperado
                     if self.header_recebido[:4] != ProtocolPacket.START_FRAME:
-                        print("Incorrect header received. Dropping packet")
+                        print_debug_fsm(
+                            "Incorrect header received. Dropping packet")
                         self.reset()
                         return None
                     # Se recebemos o header do MaxPB, muda para o estado de espera
@@ -112,11 +122,11 @@ class MaquinaEstado:
 
         if self.estado == Estado.GET_MT:
             self.estado = Estado.GET_SEQ_NO
-            print("GET MT")
+            print_debug_fsm("GET MT")
             return None
 
         if self.estado == Estado.GET_SEQ_NO:
-            print("GET SEQ_NO")
+            print_debug_fsm("GET SEQ_NO")
             self.estado = Estado.GET_SIZE
             return None
 
@@ -124,26 +134,26 @@ class MaquinaEstado:
         if self.estado == Estado.GET_SIZE:
             if self.byteCount == 0:
                 self.size = ord(byte)
-                print("GET SIZE1")
+                print_debug_fsm("GET SIZE1")
             else:  # Recebidos os dois bytes do tamanho
                 self.size += ord(byte) * 256
                 self.estado = Estado.GET_CRC
-                print("GET SIZE2: %s" % self.size)
+                print_debug_fsm("GET SIZE2: %s" % self.size)
                 self.byteCount = 0
                 return None
 
         if self.estado == Estado.GET_CRC:
             if self.byteCount == 0:
-                print("GET CRC1")
+                print_debug_fsm("GET CRC1")
             else:  # Recebidos os dois bytes do tamanho
                 self.estado = Estado.GET_DATA
-                print("GET CRC2")
+                print_debug_fsm("GET CRC2")
                 self.byteCount = 0
                 return None
 
         # Estado que pega o resto
         if self.estado == Estado.GET_DATA:
-            print("GET DATA %d/%d" % (self.byteCount + 1, self.size))
+            print_debug_fsm("GET DATA %d/%d" % (self.byteCount + 1, self.size))
             if self.byteCount == self.size - 1:  # Hack:-1 pois vai somar um embaixo
                 pacote = decode_maxpb(self.corpo_pacote)
                 if self.callback:
@@ -163,16 +173,21 @@ def newPacket(packet):
     ledsValues = ptcl_leds.LedsValues()
     print("SZ: %d LEN: %d" % (packet.size, len(packet.payload)))
     ledsValues.ParseFromString(packet.payload)
-    print(protobuf_to_dict(ledsValues))
+    print("PAYLOAD: %s " % ledsValues)
+    if (packet.mt == mts.MSG_SET_LEDS_VALUE):
+        pct = ProtocolPacket()
+        pct.mt = mts.MSG_LEDS_STATUS
+        pct.payload = packet.payload
+        ser.write(pct.encode())
 
 
 if __name__ == '__main__':
-    ser = serial.Serial("/dev/pts/7", 115200)
+    ser = serial.Serial("/dev/pts/13", 115200)
     maqEstado = MaquinaEstado(Estado.CHECK_HEADER, callback=newPacket)
     new_thread = serial.threaded.ReaderThread(ser, ProcessData)
     new_thread.start()
     mt = 0
-    while (1):
+    while True:
         time.sleep(2)
         # pct = ProtocolPacket()
         # pct.mt = 0x84

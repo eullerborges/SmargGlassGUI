@@ -1,0 +1,12 @@
+syntax = "proto2";
+
+import "Protocol_Leds.proto";
+
+message TimingConfig {
+    required uint32 period = 1;
+}
+
+message FileConfig {
+    optional TimingConfig timingConfig = 1;
+    repeated LedsValues repLedsValues = 2;
+}
